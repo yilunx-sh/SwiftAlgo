@@ -8,6 +8,7 @@
 
 import Foundation
 
+// binary search tree
 enum BinaryTree<T: Comparable> {
     case empty
     indirect case node(BinaryTree, T, BinaryTree)
@@ -46,6 +47,56 @@ enum BinaryTree<T: Comparable> {
                 return .node(left.newTreeWithInsertedValue(newValue: newValue), value, right)
             } else {
                 return .node(left, value, right.newTreeWithInsertedValue(newValue: newValue))
+            }
+        }
+    }
+    
+    func traverseInOrder(process: (T) -> ()) {
+        switch self {
+        case .empty:
+            return
+        case let .node(left, value, right):
+            left.traverseInOrder(process: process)
+            process(value)
+            right.traverseInOrder(process: process)
+        }
+    }
+    
+    func traversePreOrder( process: (T) -> ()) {
+        switch self {
+        case .empty:
+            return
+        case let .node(left, value, right):
+            process(value)
+            left.traverseInOrder(process: process)
+            right.traverseInOrder(process: process)
+        }
+    }
+    
+    func traversePostOrder( process: (T) -> ()) {
+      switch self {
+      case .empty:
+        return
+      case let .node(left, value, right):
+        left.traversePostOrder(process: process)
+        right.traversePostOrder(process: process)
+        process(value)
+      }
+    }
+    
+    func search(searchValue: T) -> BinaryTree? {
+        switch self {
+        case .empty:
+            return nil
+        case let .node(left, value, right):
+            if searchValue == value {
+                return self
+            }
+                
+            if searchValue > value {
+                return right.search(searchValue: searchValue)
+            } else {
+                return left.search(searchValue: searchValue)
             }
         }
     }

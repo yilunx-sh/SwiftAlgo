@@ -14,7 +14,9 @@ var queueTest = false
 var insertionSortTest = false
 var binarySearchTest = false
 var treeTest = false
-var binarySearchTreeTest = true
+var binarySearchTreeTest = false
+var mergeSortTest = false
+var boyerMooreStringSearchTest = true
 
 // MARK: - stack test
 
@@ -177,5 +179,37 @@ if binarySearchTreeTest {
     binaryTree.insert(newValue: 7)
     binaryTree.insert(newValue: 9)
     print(binaryTree)
+    
+    var tree2: BinaryTree<Int> = .empty
+    tree2.insert(newValue: 7)
+    tree2.insert(newValue: 10)
+    tree2.insert(newValue: 2)
+    tree2.insert(newValue: 1)
+    tree2.insert(newValue: 5)
+    tree2.insert(newValue: 9)
+
+    tree2.traverseInOrder { print($0) }
+    tree2.traversePreOrder { print($0) }
+    tree2.traversePostOrder { print($0) }
+    
+    let searchResult = tree2.search(searchValue: 4)
+    print(searchResult ?? "nil")
+}
+
+if mergeSortTest {
+    let list = [ 10, -1, 3, 9, 2, 27, 8, 5, 1, 3, 0, 26 ]
+    let list2 = [ "a", "c", "b", "A" ]
+    print(Sort.mergeSort(list))
+    print(Sort.mergeSort(list2))
+}
+
+if boyerMooreStringSearchTest {
+    let pattern = "rl"
+    let str = "hello, world"
+    if let idx = (str.index(of : pattern)) {
+        let distance = str.distance(from: str.startIndex, to: idx)
+        print(distance)
+    }
+
 }
 
